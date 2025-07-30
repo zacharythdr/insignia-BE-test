@@ -10,14 +10,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+connectDB();
 
 app.get("/", (req, res) => {
   res.send("Hello World! Ini test Insignia!");
 });
 
-connectDB();
-
 app.use("/api/users", userRoutes);
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});

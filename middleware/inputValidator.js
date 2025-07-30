@@ -1,6 +1,6 @@
 const { body, validationResult } = require("express-validator");
 
-const validateRegister = [
+const inputValidator = [
   body("name").notEmpty().withMessage("Name is required"),
   body("email").isEmail().withMessage("Invalid email format").normalizeEmail(),
   body("password")
@@ -19,4 +19,4 @@ const validateRegister = [
   },
 ];
 
-module.exports = { validateRegister };
+module.exports = { inputValidator };
