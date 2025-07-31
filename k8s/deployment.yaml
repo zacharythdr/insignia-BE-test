@@ -24,9 +24,9 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: node-auth-secret
-                  key: jwt
+                  key: JWT_SECRET
             - name: MONGO_URI
               valueFrom:
                 secretKeyRef:
                   name: node-auth-secret
-                  key: mongoUri
+                  key: MONGO_URI
