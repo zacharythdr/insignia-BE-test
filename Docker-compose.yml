@@ -14,7 +14,7 @@ services:
     container_name: mongo-db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=se
+      - MONGO_INITDB_ROOT_PASSWORD=securepass
     ports:
       - "27017:27017"
     volumes:
