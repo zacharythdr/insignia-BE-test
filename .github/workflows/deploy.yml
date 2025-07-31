@@ -76,5 +76,7 @@ jobs:
           kubectl apply -f k8s/secret.yaml
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/service.yaml
+          kubectl apply -f k8s/mongo-deployment.yaml
+          kubectl apply -f k8s/mongo-service.yaml
         env:
           KUBECONFIG: ${{ github.workspace }}/kubeconfig
