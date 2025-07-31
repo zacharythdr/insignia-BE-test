@@ -77,4 +77,4 @@ jobs:
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/service.yaml
         env:
-        KUBECONFIG: ${{ github.workspace }}/kubeconfig
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
