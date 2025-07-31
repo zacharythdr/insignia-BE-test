@@ -34,17 +34,19 @@ jobs:
     needs: test
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Log in to Docker Hub
+      - name: 🔑 Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker Image
-        run: docker build -t ${{ env.DOCKER_IMAGE }} .
+      - name: 🏗️ Build Docker Image
+        run: |
+          docker build -t ${{ env.DOCKER_IMAGE }}:latest .
 
-      - name: Push Docker Image
-        run: docker push ${{ env.DOCKER_IMAGE }}
+      - name: 🚀 Push Docker Image
+        run: |
+          docker push ${{ env.DOCKER_IMAGE }}:latest
