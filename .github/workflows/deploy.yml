@@ -68,7 +68,9 @@ jobs:
       - name: Configure kubeconfig
         run: |
           echo "${{ secrets.KUBECONFIG }}" > kubeconfig
-          
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
+
       - name: Apply Kubernetes manifests
         run: |
           kubectl apply -f k8s/secret.yaml
