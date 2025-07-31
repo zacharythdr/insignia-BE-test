@@ -6,10 +6,14 @@ const {
   getUserById,
   updateUser,
   deleteUser,
+  login,
 } = require("../controller/userController");
 const { inputValidator } = require("../middleware/inputValidator");
+const authentication = require("../middleware/authentication");
 
-router.post("/users", inputValidator, registerUser);
+router.post("/", inputValidator, registerUser);
+router.post("/login", login);
+router.use(authentication);
 router.get("/", getAllUsers);
 router.get("/:id", getUserById);
 router.put("/:id", inputValidator, updateUser);

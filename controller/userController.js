@@ -1,6 +1,51 @@
 const User = require("../model/user");
-const { hashPassword } = require("../helper/bcrypt");
-const { get } = require("mongoose");
+const { hashPassword, comparePassword } = require("../helper/bcrypt");
+const { signToken } = require("../helper/jwt");
+
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    const isValid = comparePassword(password, user.password);
+    if (!isValid) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    const token = signToken({
+      id: user._id,
+      email: user.email,
+      name: user.name,
+    });
+
+    res.setHeader("Authorization", `Bearer ${token}`);
+
+    return res.status(200).json({
+      message: "Login successful",
+      access_token: token,
+      user: {
+        id: user._id,
+        email: user.email,
+        name: user.name,
+      },
+    });
+  } catch (err) {
+    console.error("Login error:", err);
+    return res
+      .status(500)
+      .json({ message: "Login failed", error: err.message });
+  }
+};
 
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -58,9 +103,7 @@ const getUserById = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
-    const hashedPassword = password
-      ? await bcrypt.hash(password, 10)
-      : undefined;
+    const hashedPassword = password ? hashPassword(password) : undefined;
 
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
@@ -96,6 +139,7 @@ const deleteUser = async (req, res, next) => {
 };
 
 module.exports = {
+  login,
   registerUser,
   getAllUsers,
   getUserById,
