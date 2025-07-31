@@ -1,6 +1,6 @@
 services:
   app:
-    build: .
+    build: zacharytheodore/node-auth-insignia:lates
     container_name: node-auth-app
     ports:
       - "3000:3000"

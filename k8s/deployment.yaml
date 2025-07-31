@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-auth-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-auth
+  template:
+    metadata:
+      labels:
+        app: node-auth
+    spec:
+      containers:
+        - name: node-auth
+          image: zacharytheodore/node-auth-insignia:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: node-auth-secret
+                  key: jwt
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: node-auth-secret
+                  key: mongoUri

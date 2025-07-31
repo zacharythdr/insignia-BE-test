@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: node-auth-secret
+type: Opaque
+stringData:
+  jwt: rahasia
+  mongoUri: mongodb://admin:securepass@mongo:27017
